@@ -30,7 +30,8 @@ namespace Module_1_FileSystemVisitor
         [Test]
         public void FilesIsNotNull()
         {
-            var files = FileSystemVisitor.GetAllFilesAndDirectories(FileSystemVisitor.Root).ToList();
+            int counter = 0;
+            var files = FileSystemVisitor.GetAllFilesAndDirectories(FileSystemVisitor.Root, counter).ToList();
             Assert.NotNull(files);
             Assert.IsTrue(files.Count > 0);
 
@@ -72,6 +73,45 @@ namespace Module_1_FileSystemVisitor
             Assert.Contains("DirectoryFinded " + fileSystem.Name, EventsList);
             Assert.Contains("filterdirectory " + fileSystem.Name, EventsList);
 
+        }
+
+        [Test]
+        public void InterruptionSearching()
+        {
+            //Delegate stops searching when number of finded files more than 10
+            FileSystemVisitor.FileFinded += (sender, args) =>
+            {
+                if (args.NumberOfFiles > 10)
+                {
+                    ((FileSystemVisitor)sender).StopSearch = true;
+                }
+                EventsList.Add("FileFinded " + args.FileSystemInfo);
+            };
+
+            FileSystemVisitor.FilterMethod = null;
+
+            var filteredFiles = FileSystemVisitor.TraverseDirectoryTree();
+
+            Assert.IsTrue(filteredFiles.Count <= 10);
+        }
+
+        [Test]
+        public void ExcludeFiles()
+        {
+            //Exclude files that are archives
+            FileSystemVisitor.FileFinded += (sender, args) =>
+            {
+
+                ((FileSystemVisitor)sender).ExcludeFile = (file) => (file.Attributes == FileAttributes.Archive);
+
+                EventsList.Add("FileFinded " + args.FileSystemInfo);
+            };
+
+            FileSystemVisitor.FilterMethod = null;
+
+            var filteredFiles = FileSystemVisitor.TraverseDirectoryTree();
+
+            Assert.IsTrue((filteredFiles.Where(file => file.Attributes == FileAttributes.Archive)).ToList().Count == 0);
         }
 
     }

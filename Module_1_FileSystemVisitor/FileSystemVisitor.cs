@@ -9,10 +9,12 @@ using Module_1_FileSystemVisitor.EventArgs;
 
 namespace Module_1_FileSystemVisitor
 {
-    public class FileSystemVisitor
+    public class FileSystemVisitor : IFileSystemVisitor
     {
         public DirectoryInfo Root { get; set; }
         public Func<FileSystemInfo, bool> FilterMethod { get; set; }
+        public Func<FileSystemInfo, bool> ExcludeFile { get; set; }
+        public bool StopSearch { get; set; }
 
         public event EventHandler<StartArgs> Start;
         public event EventHandler<FinishArgs> Finish;
@@ -41,9 +43,10 @@ namespace Module_1_FileSystemVisitor
 
         public List<FileSystemInfo> TraverseDirectoryTree()
         {
+            int counter = 0;
             OnEvent(Start, new StartArgs());
 
-            var allFilesAndDirectories = GetAllFilesAndDirectories(Root).ToList();
+            var allFilesAndDirectories = GetAllFilesAndDirectories(Root, counter).ToList();
             var filteredFilesAndDirectories = new List<FileSystemInfo>();
 
             if (FilterMethod != null)
@@ -69,26 +72,46 @@ namespace Module_1_FileSystemVisitor
                 filteredFilesAndDirectories = allFilesAndDirectories;
             }
 
+            if (ExcludeFile != null)
+            {
+                filteredFilesAndDirectories = filteredFilesAndDirectories.Where(file => ExcludeFile(file) != true).ToList();
+            }
             OnEvent(Finish, new FinishArgs());
+            StopSearch = false;
             return filteredFilesAndDirectories;
 
         }
 
-        public IEnumerable<FileSystemInfo> GetAllFilesAndDirectories(DirectoryInfo directory)
+        public IEnumerable<FileSystemInfo> GetAllFilesAndDirectories(DirectoryInfo directory, int counter)
         {
             foreach (var fileSystem in directory.GetFiles())
             {
-                OnEvent(FileFinded, new FileFindedArgs() { FileSystemInfo = fileSystem });
+                if (StopSearch)
+                {
+                    yield break;
+                }
+                counter++;
+                OnEvent(FileFinded, new FileFindedArgs() { FileSystemInfo = fileSystem, NumberOfFiles = counter });
                 yield return fileSystem;
             }
 
             foreach (var directorySystem in directory.GetDirectories())
             {
+                if (StopSearch)
+                {
+                    yield break;
+                }
+                counter++;
                 OnEvent(DirectoryFinded, new DirectoryFindedArgs() { FileSystemInfo = directorySystem });
                 yield return directorySystem;
 
-                foreach (var files in GetAllFilesAndDirectories(directorySystem))
+                foreach (var files in GetAllFilesAndDirectories(directorySystem, counter))
                 {
+                    if (StopSearch)
+                    {
+                        yield break;
+                    }
+                    counter++;
                     yield return files;
                 }
             }

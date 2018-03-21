@@ -10,5 +10,6 @@ namespace Module_1_FileSystemVisitor.EventArgs
     public class FileFindedArgs
     {
         public FileSystemInfo FileSystemInfo { get; internal set; }
+        public int NumberOfFiles { get; internal set; }
     }
 }

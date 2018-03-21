@@ -1,10 +1,10 @@
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\Module_1_FileSystemVisitor.exe.config
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\Module_1_FileSystemVisitor.exe
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\Module_1_FileSystemVisitor.pdb
-c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\obj\Debug\Module_1_FileSystemVisitor.csprojResolveAssemblyReference.cache
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\obj\Debug\Module_1_FileSystemVisitor.exe
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\obj\Debug\Module_1_FileSystemVisitor.pdb
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\nunit.framework.dll
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\nunit.framework.pdb
 c:\users\yana_petrachenka\documents\visual studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\bin\Debug\nunit.framework.xml
+C:\Users\Yana_Petrachenka\Documents\Visual Studio 2015\Projects\Module_1_FileSystemVisitor\Module_1_FileSystemVisitor\obj\Debug\Module_1_FileSystemVisitor.csprojResolveAssemblyReference.cache
